@@ -92,6 +92,7 @@ a { color: inherit; }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 36px -14px var(--shadow); }
 .btn-ghost { background: var(--glass-strong); color: var(--ink); border-color: var(--glass-edge); }
 .btn-ghost:hover { transform: translateY(-2px); }
+.btn:disabled { opacity: .6; cursor: default; transform: none; }
 .btn svg { width: 1.05em; height: 1.05em; flex: none; }
 
 /* En-tête */
@@ -205,7 +206,7 @@ form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1re
 .field.full { grid-column: 1 / -1; }
 .field label, .field .legend { font-size: .86rem; font-weight: 700; }
 .field .hint { font-size: .8rem; color: var(--ink-faint); font-weight: 500; }
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"], input[type="tel"], input[type="number"], select, textarea {
   width: 100%; padding: .8rem .95rem; border-radius: 14px; border: 1px solid var(--line);
   background: var(--glass-strong); color: var(--ink); font: 500 1rem/1.4 var(--font-body);
   transition: border-color .15s ease, box-shadow .15s ease;
@@ -469,6 +470,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         <ul>
           <li data-i="f3">Adults only (18 or older).</li>
           <li data-i="f4">Your answers are only used to review your application.</li>
+          <li data-i="f5">We get back to you on WhatsApp.</li>
         </ul>
       </div>
 
@@ -482,8 +484,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
           <input id="f-age" name="age" type="number" inputmode="numeric" min="18" max="99" required>
         </div>
         <div class="field full">
-          <label for="f-contact"><span data-i="l3">Where to reach you</span> <span class="hint" data-i="l3h">Telegram, WhatsApp or email</span></label>
-          <input id="f-contact" name="contact" type="text" placeholder="@yourhandle, number or email address" data-ip="l3p" required>
+          <label for="f-contact"><span data-i="l3">Your WhatsApp number</span> <span class="hint" data-i="l3h">with country code</span></label>
+          <input id="f-contact" name="contact" type="tel" inputmode="tel" autocomplete="tel" placeholder="+1 555 123 4567" data-ip="l3p" required>
         </div>
         <div class="field full">
           <label for="f-reseaux"><span data-i="l4">Your socials</span> <span class="hint">Instagram, TikTok, X…</span></label>
@@ -525,20 +527,12 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         </label>
         <p class="error field full" id="erreur" role="alert" hidden></p>
         <div class="form-foot">
-          <button class="btn btn-primary" type="submit" data-i="l10">Prepare my application</button>
+          <button class="btn btn-primary" type="submit" id="envoyer" data-i="l10">Send my application</button>
         </div>
 
         <div class="result" id="resultat" aria-live="polite" hidden>
-          <div>
-            <h3 data-i="r1">Your application is ready.</h3>
-            <p class="muted" id="resultat-texte"></p>
-          </div>
-          <pre id="recap" tabindex="0"></pre>
-          <div class="result-actions">
-            <a class="btn btn-primary" id="lien-telegram" target="_blank" rel="noopener" data-i="r2" hidden>Send on Telegram</a>
-            <a class="btn btn-primary" id="lien-whatsapp" target="_blank" rel="noopener" data-i="r3" hidden>Send on WhatsApp</a>
-            <button class="btn btn-ghost" type="button" id="copier">Copy the message</button>
-          </div>
+          <h3 data-i="r1">Application sent.</h3>
+          <p class="muted" data-i="r2">Thank you. We will contact you on WhatsApp.</p>
         </div>
       </form>
     </section>
@@ -582,12 +576,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 
 <script>
 (function () {
-  // OÙ PARTENT LES CANDIDATURES : renseigner au moins un des deux.
-  // telegram : le pseudo sans @ (ex. "naylisagency") ; whatsapp : le numéro au format international sans + (ex. "33612345678").
-  var CONTACT = { telegram: "", whatsapp: "33771542113" };
-  // Envoi par e-mail : seulement sur la version hébergée (index.html), qui pose l'adresse du service de formulaire.
+  // Les candidatures partent par e-mail (service de formulaire), uniquement sur le site hébergé :
+  // build.py pose l'adresse du service dans index.html. Aucun contact de l'agence n'est affiché sur la page.
   var MAIL = window.NAYLIS_MAIL || "";
-  var dernierEnvoi = "";
 
   // L'anglais est dans la page ; le français remplace les textes à la demande (bouton FR).
   var FR = {
@@ -628,15 +619,15 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     p5t: "On lance", p5: "Ton équipe prend en main le chatting et les réseaux, et génère du trafic en plus du tien.",
     f0: "Candidature", f1: "Postuler chez <em>Naylis.</em>",
     f2: "Dis-nous où tu en es. Créatrice déjà lancée ou débutante, on étudie chaque profil.",
-    f3: "Réservé aux personnes majeures (18 ans ou plus).", f4: "Tes réponses servent uniquement à étudier ta candidature.",
-    l1: "Prénom ou pseudo", l2: "Âge", l3: "Où te recontacter", l3h: "Telegram, WhatsApp ou e-mail",
-    l3p: "@tonpseudo, numéro ou adresse e-mail", l4: "Tes réseaux", l4p: "@toncompte",
+    f3: "Réservé aux personnes majeures (18 ans ou plus).", f4: "Tes réponses servent uniquement à étudier ta candidature.", f5: "On te recontacte sur WhatsApp.",
+    l1: "Prénom ou pseudo", l2: "Âge", l3: "Ton numéro WhatsApp", l3h: "avec l'indicatif du pays",
+    l3p: "+33 6 12 34 56 78", l4: "Tes réseaux", l4p: "@toncompte",
     l5: "Ta situation", l5a: "Déjà lancée", l5b: "Je débute",
     l6: "Plateforme", l6a: "Les deux", l6b: "Autre",
     l7: "Revenu mensuel actuel", l7a: "Moins de 5 k€", l7b: "5 à 20 k€", l7c: "20 à 50 k€", l7d: "50 à 100 k€", l7e: "Plus de 100 k€",
     l8: "Un mot sur toi", l8h: "facultatif", l8p: "Ton univers, tes objectifs, ce que tu attends d'une agence.",
-    l9: "Je certifie avoir 18 ans ou plus.", l10: "Préparer ma candidature",
-    r1: "Ta candidature est prête.", r2: "Envoyer sur Telegram", r3: "Envoyer sur WhatsApp",
+    l9: "Je certifie avoir 18 ans ou plus.", l10: "Envoyer ma candidature",
+    r1: "Candidature envoyée.", r2: "Merci. Nous te recontacterons sur WhatsApp.",
     q0: "Ce qu'on nous demande souvent.",
     q1t: "Je n'ai pas encore de compte, je peux postuler ?", q1: "Oui. On prend aussi les nouvelles créatrices. Comme l'investissement de départ est plus important pour l'agence, ta part peut être plus basse au début, puis elle se renégocie.",
     q2t: "Quelle part garde l'agence ?", q2: "50 % pour une créatrice déjà lancée. Pour une nouvelle créatrice, le pourcentage est fixé avec toi avant de commencer et il est renégociable.",
@@ -644,43 +635,34 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     q4t: "Le chatting tourne vraiment la nuit ?", q4: "Oui, 24h/24 et 7 jours sur 7, avec des scripts de vente optimisés.",
     z1: "Site réservé aux personnes majeures"
   };
-  // Les phrases que le script écrit lui-même (erreurs, récapitulatif).
+  // Les phrases que le script écrit lui-même (erreurs, bouton).
   var MOTS = {
     en: {
       prenom: "Enter your first name or alias.", age: "Enter your age.",
       mineure: "Naylis only works with adults (18 or older).",
-      contact: "Tell us where to reach you: Telegram, WhatsApp or email.",
+      contact: "Enter your WhatsApp number with its country code, for example +1 555 123 4567.",
       case_: "Tick the box to certify that you are 18 or older.",
-      titre: "Naylis Agency application", sep: ": ", lPrenom: "Name", lAge: "Age", ans: "", lContact: "Contact", lReseaux: "Socials",
-      lSituation: "Situation", lancee: "Already established", nouvelle: "New creator", lPlateforme: "Platform", lRevenu: "Monthly revenue",
-      envoyer: "Last step: send this message to the agency with the button below.",
-      copierEnvoyer: "Copy this message and send it to the agency.",
-      envoyee: "Your application has been emailed to the agency. Send it on WhatsApp too for a faster reply.",
-      copier: "Copy the message", copie: "Message copied", selection: "Message selected: copy it"
+      envoi: "Sending…", bouton: "Send my application",
+      echec: "Your application could not be sent. Check your connection and try again in a moment.",
+      indisponible: "Applications can't be sent from this preview. Use the agency's website."
     },
     fr: {
       prenom: "Indique ton prénom ou ton pseudo.", age: "Indique ton âge.",
       mineure: "Naylis travaille uniquement avec des personnes majeures (18 ans ou plus).",
-      contact: "Indique où te recontacter : Telegram, WhatsApp ou e-mail.",
+      contact: "Indique ton numéro WhatsApp avec l'indicatif du pays, par exemple +33 6 12 34 56 78.",
       case_: "Coche la case pour certifier que tu as 18 ans ou plus.",
-      titre: "Candidature Naylis Agency", sep: " : ", lPrenom: "Prénom", lAge: "Âge", ans: " ans", lContact: "Contact", lReseaux: "Réseaux",
-      lSituation: "Situation", lancee: "Déjà lancée", nouvelle: "Nouvelle créatrice", lPlateforme: "Plateforme", lRevenu: "Revenu mensuel",
-      envoyer: "Dernière étape : envoie ce message à l'agence avec le bouton ci-dessous.",
-      copierEnvoyer: "Copie ce message et envoie-le à l'agence.",
-      envoyee: "Ta candidature a été envoyée à l'agence par e-mail. Envoie-la aussi sur WhatsApp pour une réponse plus rapide.",
-      copier: "Copier le message", copie: "Message copié", selection: "Message sélectionné : copie-le"
+      envoi: "Envoi…", bouton: "Envoyer ma candidature",
+      echec: "Ta candidature n'a pas pu être envoyée. Vérifie ta connexion et réessaie dans un instant.",
+      indisponible: "Les candidatures ne peuvent pas être envoyées depuis cet aperçu. Passe par le site de l'agence."
     }
   };
 
   var langue = "en";
+  var enCours = false;
   var form = document.getElementById("candidature");
   var erreur = document.getElementById("erreur");
   var resultat = document.getElementById("resultat");
-  var recap = document.getElementById("recap");
-  var texte = document.getElementById("resultat-texte");
-  var lienTg = document.getElementById("lien-telegram");
-  var lienWa = document.getElementById("lien-whatsapp");
-  var copier = document.getElementById("copier");
+  var bouton = document.getElementById("envoyer");
   var blocRevenu = document.getElementById("bloc-revenu");
   var blocPlateforme = document.getElementById("bloc-plateforme");
 
@@ -700,9 +682,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     document.querySelectorAll("[data-lang]").forEach(function (b) {
       b.setAttribute("aria-pressed", b.dataset.lang === langue ? "true" : "false");
     });
-    copier.textContent = MOTS[langue].copier;
+    if (enCours) bouton.textContent = MOTS[langue].envoi;
     erreur.hidden = true;
-    resultat.hidden = true;
     try { localStorage.setItem("naylis-langue", langue); } catch (e) { /* stockage indisponible : la langue ne sera pas retenue */ }
   }
   document.querySelectorAll("[data-lang]").forEach(function (b) {
@@ -729,58 +710,50 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    if (enCours) return;
     resultat.hidden = true;
     var m = MOTS[langue];
     var v = function (id) { return (document.getElementById(id).value || "").trim(); };
-    var prenom = v("f-prenom"), contact = v("f-contact"), age = parseInt(v("f-age"), 10);
+    var prenom = v("f-prenom"), whatsapp = v("f-contact"), age = parseInt(v("f-age"), 10);
     if (!prenom) { dire(m.prenom); return; }
     if (!age) { dire(m.age); return; }
     if (age < 18) { dire(m.mineure); return; }
-    if (!contact) { dire(m.contact); return; }
+    if (whatsapp.replace(/\D/g, "").length < 8) { dire(m.contact); return; }
     if (!document.getElementById("f-majeure").checked) { dire(m.case_); return; }
+    if (!MAIL) { dire(m.indisponible); return; }
     dire("");
 
+    // Le mail reçu par l'agence est toujours en français, quelle que soit la langue du site.
     var lancee = situation() === "lancee";
-    var lignes = [m.titre, "", m.lPrenom + m.sep + prenom, m.lAge + m.sep + age + m.ans, m.lContact + m.sep + contact];
-    if (v("f-reseaux")) lignes.push(m.lReseaux + m.sep + v("f-reseaux"));
-    lignes.push(m.lSituation + m.sep + (lancee ? m.lancee : m.nouvelle));
+    var fiche = { _subject: "Candidature Naylis - " + prenom, _captcha: "false", _template: "table",
+                  "Prénom": prenom, "Âge": age + " ans", "WhatsApp": whatsapp };
+    if (v("f-reseaux")) fiche["Réseaux"] = v("f-reseaux");
+    fiche["Situation"] = lancee ? "Déjà lancée" : "Nouvelle créatrice";
     if (lancee) {
-      lignes.push(m.lPlateforme + m.sep + v("f-plateforme"));
-      lignes.push(m.lRevenu + m.sep + v("f-revenu"));
+      fiche["Plateforme"] = v("f-plateforme");
+      fiche["Revenu mensuel"] = v("f-revenu");
     }
-    if (v("f-message")) lignes.push("", v("f-message"));
-    var message = lignes.join("\n");
-    recap.textContent = message;
+    if (v("f-message")) fiche["Message"] = v("f-message");
+    fiche["Langue du site"] = langue === "fr" ? "Français" : "Anglais";
 
-    var encode = encodeURIComponent(message);
-    lienTg.hidden = !CONTACT.telegram;
-    lienWa.hidden = !CONTACT.whatsapp;
-    if (CONTACT.telegram) lienTg.href = "https://t.me/" + CONTACT.telegram + "?text=" + encode;
-    if (CONTACT.whatsapp) lienWa.href = "https://wa.me/" + CONTACT.whatsapp + "?text=" + encode;
-    texte.textContent = (CONTACT.telegram || CONTACT.whatsapp) ? m.envoyer : m.copierEnvoyer;
-    copier.textContent = m.copier;
-    // Un même message ne part qu'une fois ; on n'annonce l'envoi que si le service l'a confirmé.
-    if (MAIL && message !== dernierEnvoi) {
-      dernierEnvoi = message;
-      fetch(MAIL, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({ _subject: m.titre + " - " + prenom, _captcha: "false", _template: "box", message: message }) })
-        .then(function (r) { return r.json(); })
-        .then(function (d) { if (d && String(d.success) === "true") texte.textContent = m.envoyee; else dernierEnvoi = ""; })
-        .catch(function () { dernierEnvoi = ""; });
-    }
-    resultat.hidden = false;
-    resultat.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  });
-
-  copier.addEventListener("click", function () {
-    var m = MOTS[langue];
-    var fini = function () { copier.textContent = m.copie; };
-    var secours = function () {
-      var s = window.getSelection(), plage = document.createRange();
-      plage.selectNodeContents(recap); s.removeAllRanges(); s.addRange(plage);
-      copier.textContent = m.selection;
+    enCours = true;
+    bouton.disabled = true;
+    bouton.textContent = m.envoi;
+    // On n'annonce le succès que si le service a confirmé l'envoi ; sinon la candidate garde sa saisie.
+    var fin = function (ok) {
+      enCours = false;
+      bouton.disabled = false;
+      bouton.textContent = MOTS[langue].bouton;
+      if (!ok) { dire(MOTS[langue].echec); return; }
+      form.reset();
+      majSituation();
+      resultat.hidden = false;
+      resultat.scrollIntoView({ block: "nearest", behavior: "smooth" });
     };
-    try { navigator.clipboard.writeText(recap.textContent).then(fini, secours); } catch (err) { secours(); }
+    fetch(MAIL, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(fiche) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { fin(!!d && String(d.success) === "true"); })
+      .catch(function () { fin(false); });
   });
 })();
 </script>
