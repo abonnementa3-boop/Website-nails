@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Naylis Agency: 24/7 chatting, managed socials and traffic generated on top of yours, by a dedicated team. 50/50 split. Apply in two minutes.">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script>window.NAYLIS_MAIL="https://formsubmit.co/ajax/kylian.business@icloud.com";</script>
+<title>Naylis Agency</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout : une colonne de 1120px ; des panneaux de verre dépoli posés sur un fond nacré
+   (rose, lilas, glace). Un seul geste fort : la tuile-logo en verre du hero. */
+:root {
+  --bg: #F5F4FA;
+  --ink: #191527;
+  --ink-soft: #57526D;
+  --ink-faint: #8A869E;
+  --accent: #6F52E8;
+  --rose: #F6A8C9;
+  --lilac: #BBA8FF;
+  --ice: #9ED4FF;
+  --glass: rgba(255, 255, 255, .56);
+  --glass-strong: rgba(255, 255, 255, .8);
+  --glass-edge: rgba(255, 255, 255, .92);
+  --line: rgba(25, 21, 39, .1);
+  --shadow: rgba(72, 52, 140, .17);
+  --on-ink: #FFFFFF;
+  --danger: #B8214A;
+  --font-display: "Instrument Serif", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius: 28px;
+  --radius-sm: 16px;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 17px/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; z-index: 10;
+  height: env(safe-area-inset-top, 0px); background: var(--bg);
+}
+/* Le fond nacré : trois halos fixes, sous tout le reste. */
+.aura {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(46rem 34rem at 8% -6%, var(--rose) 0%, transparent 62%),
+    radial-gradient(44rem 36rem at 96% 8%, var(--ice) 0%, transparent 60%),
+    radial-gradient(50rem 40rem at 50% 108%, var(--lilac) 0%, transparent 62%);
+  opacity: .55;
+}
+.page { position: relative; z-index: 1; display: flex; flex-direction: column; gap: clamp(4.5rem, 9vw, 7.5rem); padding-block: 14px 3rem; }
+.wrap { width: 100%; max-width: 1120px; margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 400; letter-spacing: -.01em; text-wrap: balance; }
+h1 { font-size: clamp(2.7rem, 6.6vw, 5.1rem); line-height: 1.02; }
+h2 { font-size: clamp(2.1rem, 4.2vw, 3.2rem); line-height: 1.08; }
+h3 { font-size: 1.6rem; line-height: 1.15; }
+h1 em, h2 em { font-style: italic; color: var(--accent); }
+p { margin: 0; }
+a { color: inherit; }
+.lead { font-size: clamp(1.05rem, 1.6vw, 1.22rem); color: var(--ink-soft); max-width: 60ch; }
+.eyebrow { font-size: .78rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--ink-soft); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--glass-edge), 0 24px 60px -28px var(--shadow);
+}
+
+/* Boutons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  padding: .85rem 1.5rem; border-radius: 999px; border: 1px solid transparent;
+  font: 600 1rem/1 var(--font-body); text-decoration: none; cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.btn-primary { background: var(--ink); color: var(--on-ink); box-shadow: 0 14px 30px -14px var(--shadow); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 36px -14px var(--shadow); }
+.btn-ghost { background: var(--glass-strong); color: var(--ink); border-color: var(--glass-edge); }
+.btn-ghost:hover { transform: translateY(-2px); }
+.btn svg { width: 1.05em; height: 1.05em; flex: none; }
+
+/* En-tête */
+.top { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); z-index: 20; }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .55rem .6rem .55rem 1rem; border-radius: 999px; }
+.brand { display: inline-flex; align-items: center; gap: .65rem; text-decoration: none; }
+.brand svg { width: 38px; height: 38px; flex: none; }
+.brand-name { display: flex; flex-direction: column; line-height: 1; }
+.brand-name b { font: 400 1.55rem/1 var(--font-display); letter-spacing: .01em; }
+.brand-name small { font-size: .58rem; font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--ink-faint); margin-top: .2rem; }
+.nav { display: flex; align-items: center; gap: 1.6rem; }
+.nav a:not(.btn) { font-size: .93rem; font-weight: 600; color: var(--ink-soft); text-decoration: none; }
+.nav a:not(.btn):hover { color: var(--ink); }
+.bar .btn { padding: .7rem 1.2rem; font-size: .93rem; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: center; gap: clamp(1.5rem, 4vw, 4rem); padding-top: clamp(1.5rem, 5vw, 4rem); }
+.hero-copy { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
+.cta-row { display: flex; flex-wrap: wrap; gap: .8rem; }
+.visual { position: relative; padding: 46px 26px; min-width: 0; }
+.tile {
+  width: min(100%, 330px); aspect-ratio: 1; margin-inline: auto; border-radius: 56px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem;
+  transform: rotate(-4deg);
+}
+.tile svg { width: 44%; height: auto; }
+.tile b { font: 400 clamp(2.2rem, 5vw, 3rem)/1 var(--font-display); }
+.tile small { font-size: .66rem; font-weight: 700; letter-spacing: .42em; text-transform: uppercase; color: var(--ink-faint); padding-left: .42em; }
+.chip {
+  position: absolute; display: inline-flex; align-items: center; gap: .5rem;
+  padding: .55rem .95rem; border-radius: 999px; font-size: .86rem; font-weight: 700; white-space: nowrap;
+  background: var(--glass-strong); border: 1px solid var(--glass-edge);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 14px 30px -16px var(--shadow);
+  animation: drift 7s ease-in-out infinite;
+}
+.chip i { width: .55rem; height: .55rem; border-radius: 50%; background: linear-gradient(135deg, var(--rose), var(--accent)); }
+.chip-a { top: 2%; left: 0; }
+.chip-b { top: 46%; right: 0; animation-delay: -2.4s; }
+.chip-c { bottom: 2%; left: 9%; animation-delay: -4.6s; }
+@keyframes drift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+/* Chiffres */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: .4rem; }
+.stat { padding: 1.5rem 1.4rem; display: flex; flex-direction: column; gap: .35rem; min-width: 0; }
+.stat + .stat { border-left: 1px solid var(--line); }
+.stat b { font: 400 clamp(2rem, 3.6vw, 2.9rem)/1 var(--font-display); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stat span { font-size: .9rem; color: var(--ink-soft); line-height: 1.4; }
+
+/* Sections */
+.section { display: flex; flex-direction: column; gap: 2.2rem; }
+.head { display: flex; flex-direction: column; gap: .9rem; max-width: 46rem; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+.card { padding: 1.8rem; display: flex; flex-direction: column; gap: .8rem; min-width: 0; }
+.card p { color: var(--ink-soft); }
+.icon {
+  width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; flex: none;
+  background: linear-gradient(135deg, var(--rose), var(--lilac) 55%, var(--ice)); color: var(--on-ink);
+  box-shadow: inset 0 1px 0 var(--glass-edge), 0 10px 20px -10px var(--shadow);
+}
+.icon svg { width: 22px; height: 22px; }
+
+/* Comparatif */
+.versus { padding: .6rem; display: flex; flex-direction: column; }
+.vs-row { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1fr) minmax(0, 1fr); gap: .6rem; align-items: stretch; padding: .5rem; }
+.vs-row + .vs-row { border-top: 1px solid var(--line); }
+.vs-row > * { padding: .75rem .9rem; min-width: 0; }
+.vs-label { font-weight: 700; }
+.vs-head > * { font-size: .76rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); padding-block: .4rem; }
+.vs-old { color: var(--ink-soft); }
+.vs-new { background: var(--glass-strong); border-radius: var(--radius-sm); font-weight: 600; }
+.vs-head .vs-new { background: none; color: var(--accent); }
+
+/* Règle des 40 % */
+.rule { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; padding: clamp(1.6rem, 4vw, 3rem); }
+.rule-copy { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+.meter { display: flex; flex-direction: column; gap: .6rem; min-width: 0; }
+.meter-track { display: flex; height: 64px; border-radius: 18px; overflow: hidden; border: 1px solid var(--glass-edge); background: var(--glass-strong); }
+.meter-zone { width: 40%; display: grid; place-items: center; background: linear-gradient(90deg, var(--rose), var(--lilac), var(--accent)); color: var(--on-ink); font-weight: 700; font-size: .9rem; }
+.meter-over { flex: 1; display: grid; place-items: center; font-size: .88rem; font-weight: 600; color: var(--ink-faint); text-align: center; padding-inline: .5rem;
+  background: repeating-linear-gradient(135deg, transparent 0 9px, var(--line) 9px 10px); }
+.meter-scale { position: relative; height: 1.4rem; font-size: .82rem; font-weight: 700; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.meter-scale span { position: absolute; top: 0; }
+.meter-scale span:nth-child(1) { left: 0; }
+.meter-scale span:nth-child(2) { left: 40%; transform: translateX(-50%); color: var(--accent); }
+.meter-scale span:nth-child(3) { right: 0; }
+.meter-note { font-size: .9rem; color: var(--ink-soft); }
+
+/* Conditions */
+.deal { padding: 2rem; display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.deal .tag { font-size: .76rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); }
+.deal .big { font: 400 clamp(3rem, 7vw, 4.6rem)/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.deal .big em { font-style: italic; color: var(--accent); }
+.deal p { color: var(--ink-soft); }
+
+/* Étapes */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; counter-reset: etape; }
+.steps li { counter-increment: etape; padding: 1.5rem; display: flex; flex-direction: column; gap: .5rem; min-width: 0; }
+.steps li::before { content: counter(etape); font: italic 400 2.4rem/1 var(--font-display); color: var(--accent); }
+.steps b { font-size: 1.05rem; }
+.steps span { font-size: .95rem; color: var(--ink-soft); }
+
+/* Formulaire */
+.apply { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(1.5rem, 4vw, 3.5rem); padding: clamp(1.4rem, 4vw, 3rem); align-items: start; }
+.apply-copy { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+.apply-copy ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .6rem; color: var(--ink-soft); font-size: .97rem; }
+.apply-copy li { display: flex; gap: .6rem; align-items: baseline; }
+.apply-copy li::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; flex: none; background: linear-gradient(135deg, var(--rose), var(--accent)); transform: translateY(-1px); }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; min-width: 0; }
+.field { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field label, .field .legend { font-size: .86rem; font-weight: 700; }
+.field .hint { font-size: .8rem; color: var(--ink-faint); font-weight: 500; }
+input[type="text"], input[type="number"], select, textarea {
+  width: 100%; padding: .8rem .95rem; border-radius: 14px; border: 1px solid var(--line);
+  background: var(--glass-strong); color: var(--ink); font: 500 1rem/1.4 var(--font-body);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+textarea { resize: vertical; min-height: 6.5rem; }
+input::placeholder, textarea::placeholder { color: var(--ink-faint); }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(111, 82, 232, .16); }
+.seg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+.seg label { position: relative; display: block; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; inset: 0; }
+.seg span { display: block; padding: .8rem .9rem; border-radius: 14px; border: 1px solid var(--line); background: var(--glass-strong); font-size: .95rem; font-weight: 600; text-align: center; transition: all .15s ease; }
+.seg input:checked + span { background: var(--ink); color: var(--on-ink); border-color: var(--ink); }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+.check.field { display: flex; flex-direction: row; gap: .7rem; align-items: flex-start; font-size: .92rem; color: var(--ink-soft); cursor: pointer; }
+.check input { width: 1.15rem; height: 1.15rem; margin-top: .2rem; accent-color: var(--accent); flex: none; }
+.error { font-size: .9rem; font-weight: 600; color: var(--danger); }
+.form-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.result { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 1rem; padding: 1.3rem; border-radius: 20px; background: var(--glass-strong); border: 1px solid var(--glass-edge); }
+.result pre { margin: 0; padding: 1rem; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); font: 500 .9rem/1.55 var(--font-body); white-space: pre-wrap; overflow-wrap: anywhere; user-select: all; }
+.result-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+
+/* FAQ */
+.faq { display: flex; flex-direction: column; gap: .7rem; max-width: 50rem; }
+.faq details { padding: 0; border-radius: 20px; }
+.faq summary { list-style: none; cursor: pointer; padding: 1.15rem 1.4rem; font-weight: 700; display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 400 1.6rem/1 var(--font-display); color: var(--accent); flex: none; transition: transform .2s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding: 0 1.4rem 1.25rem; color: var(--ink-soft); }
+
+/* Pied */
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1.6rem; border-top: 1px solid var(--line); font-size: .86rem; color: var(--ink-faint); }
+
+@media (max-width: 900px) {
+  .hero, .rule, .apply { grid-template-columns: minmax(0, 1fr); }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:nth-child(3) { border-left: 0; }
+  .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nav a:not(.btn) { display: none; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .cards, form { grid-template-columns: minmax(0, 1fr); }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .stat { padding: 1.1rem .9rem; }
+  .vs-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vs-label { grid-column: 1 / -1; padding-bottom: 0; }
+  .vs-head .vs-label { display: none; }
+  .brand-name small { display: none; }
+  .visual { padding: 44px 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .chip { animation: none; }
+  .btn, .btn:hover { transition: none; transform: none; }
+}
+
+/* Sélecteur de langue */
+.lang { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--glass-strong); border: 1px solid var(--line); }
+.lang button { border: 0; background: none; cursor: pointer; padding: .38rem .7rem; border-radius: 999px; font: 700 .78rem/1 var(--font-body); letter-spacing: .06em; color: var(--ink-soft); }
+.lang button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
+@media (max-width: 900px) { .nav { gap: .6rem; } }
+@media (max-width: 420px) { .bar .btn { padding: .7rem .95rem; } .brand svg { width: 34px; height: 34px; } .brand-name b { font-size: 1.35rem; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="nay-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6A8C9"/>
+      <stop offset=".52" stop-color="#A98BFF"/>
+      <stop offset="1" stop-color="#8CCBFF"/>
+    </linearGradient>
+    <linearGradient id="nay-shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".55"/>
+      <stop offset=".6" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Logo : tuile nacrée, N blanc, étoile à la place de la pointe. -->
+  <symbol id="nay-mark" viewBox="0 0 64 64">
+    <rect x="2" y="2" width="60" height="60" rx="19" fill="url(#nay-grad)"/>
+    <rect x="2" y="2" width="60" height="60" rx="19" fill="url(#nay-shine)"/>
+    <path d="M21 46V19l22 27V25" fill="none" stroke="#FFFFFF" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M43 6.5c.7 4.6 2.2 6.1 6.8 6.8-4.6.7-6.1 2.2-6.8 6.8-.7-4.6-2.2-6.1-6.8-6.8 4.6-.7 6.1-2.2 6.8-6.8z" fill="#FFFFFF"/>
+  </symbol>
+  <!-- Variante au trait, pour la tuile de verre du hero. -->
+  <symbol id="nay-line" viewBox="0 0 64 64">
+    <path d="M17 50V16l30 34V24" fill="none" stroke="url(#nay-grad)" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M47 2c.9 5.6 2.7 7.4 8.3 8.3-5.6.9-7.4 2.7-8.3 8.3-.9-5.6-2.7-7.4-8.3-8.3 5.6-.9 7.4-2.7 8.3-8.3z" fill="url(#nay-grad)"/>
+  </symbol>
+</svg>
+
+<div class="aura" aria-hidden="true"></div>
+
+<div class="page">
+  <header class="top wrap">
+    <div class="bar glass">
+      <a class="brand" href="#home" aria-label="Naylis Agency">
+        <svg aria-hidden="true"><use href="#nay-mark"/></svg>
+        <span class="brand-name"><b>Naylis</b><small>Agency</small></span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#agency" data-i="nav1">The agency</a>
+        <a href="#method" data-i="nav2">Method</a>
+        <a href="#terms" data-i="nav3">Terms</a>
+        <a href="#questions" data-i="nav4">Questions</a>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" id="lang-fr" data-lang="fr" aria-pressed="false">FR</button>
+        </div>
+        <a class="btn btn-primary" href="#apply" data-i="nav5">Apply</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" style="display:flex;flex-direction:column;gap:clamp(4.5rem,9vw,7.5rem)">
+
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i="h0">OnlyFans management agency</p>
+        <h1 data-i="h1">You create the content. <em>We handle the rest.</em></h1>
+        <p class="lead" data-i="h2">24/7 chatting, managed socials, and traffic generated on top of yours. A dedicated team runs your account while you focus on your content. 50/50 split.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#apply"><span data-i="h3">Apply now</span>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#agency" data-i="h4">See how we work</a>
+        </div>
+      </div>
+      <div class="visual" aria-hidden="true">
+        <div class="tile glass">
+          <svg><use href="#nay-line"/></svg>
+          <b>Naylis</b>
+          <small>Agency</small>
+        </div>
+        <span class="chip chip-a"><i></i><span data-i="c1">24/7 chatting</span></span>
+        <span class="chip chip-b"><i></i><span data-i="c2">50 / 50 split</span></span>
+        <span class="chip chip-c"><i></i><span data-i="c3">Dedicated team</span></span>
+      </div>
+    </section>
+
+    <section class="stats glass" aria-label="Naylis in four figures">
+      <div class="stat"><b data-i="s1b">24/7</b><span data-i="s1">Chatting, 7 days a week</span></div>
+      <div class="stat"><b data-i="s2b">40%</b><span data-i="s2">Maximum open rate we aim for on paid content</span></div>
+      <div class="stat"><b data-i="s3b">$50–250k</b><span data-i="s3">per month: the accounts our structure is built for</span></div>
+      <div class="stat"><b>50 / 50</b><span data-i="s4">Split for established creators</span></div>
+    </section>
+
+    <section class="section" id="agency">
+      <div class="head">
+        <p class="eyebrow" data-i="a0">The agency</p>
+        <h2 data-i="a1">An agency that works <em>as hard as you do.</em></h2>
+        <p class="lead" data-i="a2">Too often, the creator makes the content, runs her socials and brings in her own traffic while the agency takes its cut. At Naylis, we manage your socials and generate traffic on our side, on top of yours.</p>
+      </div>
+      <div class="cards">
+        <article class="card glass">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v6a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 5 12.5v-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+          <h3 data-i="k1t">24/7 chatting</h3>
+          <p data-i="k1">Trained chatters reply to your fans day and night, with sales scripts written and optimized to sell.</p>
+        </article>
+        <article class="card glass">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6M16 6.2a3 3 0 0 1 0 5.6M17.5 14.8c1.7.6 2.7 2 3 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <h3 data-i="k2t">A team dedicated to your account</h3>
+          <p data-i="k2">Every creator has her own team. The people running your account know it, and you know who to talk to.</p>
+        </article>
+        <article class="card glass">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="1.8"/><circle cx="16.6" cy="7.4" r="1" fill="currentColor"/></svg></span>
+          <h3 data-i="k3t">Your socials, managed</h3>
+          <p data-i="k3">Our team takes over your social accounts: planning, posting and follow-up.</p>
+        </article>
+        <article class="card glass">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 17l5-5 3.5 3.5L20 8m0 0h-5m5 0v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <h3 data-i="k4t">Traffic that doesn't rest on you alone</h3>
+          <p data-i="k4">You take part in the traffic, and the agency generates its own too. Your growth doesn't depend only on what you post.</p>
+        </article>
+      </div>
+
+      <div class="versus glass" role="table" aria-label="What changes at Naylis">
+        <div class="vs-row vs-head" role="row">
+          <span class="vs-label" role="columnheader"></span>
+          <span class="vs-old" role="columnheader" data-i="v0a">What we often see</span>
+          <span class="vs-new" role="columnheader" data-i="v0b">At Naylis</span>
+        </div>
+        <div class="vs-row" role="row">
+          <span class="vs-label" role="rowheader" data-i="v1">Traffic</span>
+          <span class="vs-old" role="cell" data-i="v1a">You bring it in alone</span>
+          <span class="vs-new" role="cell" data-i="v1b">The agency generates it too, on top of yours</span>
+        </div>
+        <div class="vs-row" role="row">
+          <span class="vs-label" role="rowheader" data-i="v2">Social media</span>
+          <span class="vs-old" role="cell" data-i="v2a">You post everything, every day</span>
+          <span class="vs-new" role="cell" data-i="v2b">Managed by our team</span>
+        </div>
+        <div class="vs-row" role="row">
+          <span class="vs-label" role="rowheader">Chatting</span>
+          <span class="vs-old" role="cell" data-i="v3a">Limited hours, improvised messages</span>
+          <span class="vs-new" role="cell" data-i="v3b">24/7, optimized sales scripts</span>
+        </div>
+        <div class="vs-row" role="row">
+          <span class="vs-label" role="rowheader">Management</span>
+          <span class="vs-old" role="cell" data-i="v4a">One manager for dozens of accounts</span>
+          <span class="vs-new" role="cell" data-i="v4b">A dedicated team per creator</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="rule glass" id="method">
+      <div class="rule-copy">
+        <p class="eyebrow" data-i="m0">Method</p>
+        <h2 data-i="m1">We aim for a 40% open rate. <em>No higher.</em></h2>
+        <p class="lead" data-i="m2">When more than 40% of fans open a paid message, the price is too low. Our scripts and prices are tuned to stay under that ceiling and sell each piece of content at its real value.</p>
+      </div>
+      <div class="meter" role="img" aria-label="Open rate of paid content: the target zone goes up to 40%. Above that, the price is too low.">
+        <div class="meter-track">
+          <div class="meter-zone" data-i="m3">Target zone</div>
+          <div class="meter-over" data-i="m4">Above: price too low</div>
+        </div>
+        <div class="meter-scale"><span data-i="m5a">0%</span><span data-i="m5b">40%</span><span data-i="m5c">100%</span></div>
+        <p class="meter-note" data-i="m6">Open rate of paid content sent by message.</p>
+      </div>
+    </section>
+
+    <section class="section" id="terms">
+      <div class="head">
+        <p class="eyebrow" data-i="t0">Terms</p>
+        <h2 data-i="t1">Clear terms <em>from day one.</em></h2>
+      </div>
+      <div class="cards">
+        <article class="deal glass">
+          <span class="tag" data-i="t2">Established creator</span>
+          <span class="big">50 <em>/</em> 50</span>
+          <p data-i="t3">You already have an active account and revenue. We split equally: half for you, half for the agency that runs the chatting and socials, and generates traffic on top of yours.</p>
+        </article>
+        <article class="deal glass">
+          <span class="tag" data-i="t4">New creator</span>
+          <span class="big"><em data-i="t5">Tailored</em></span>
+          <p data-i="t6">We also take on beginners. The agency's upfront investment is heavier, so your share may be lower at the start. It gets renegotiated once your account takes off.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="head">
+        <p class="eyebrow" data-i="p0">How it goes</p>
+        <h2 data-i="p1">From your application to launch.</h2>
+      </div>
+      <ol class="steps">
+        <li class="glass"><b data-i="p2t">You apply</b><span data-i="p2">The form takes two minutes.</span></li>
+        <li class="glass"><b data-i="p3t">We talk</b><span data-i="p3">We look at your situation and your goals together.</span></li>
+        <li class="glass"><b data-i="p4t">We make you an offer</b><span data-i="p4">Percentage, team, launch plan: everything is set before we start.</span></li>
+        <li class="glass"><b data-i="p5t">We launch</b><span data-i="p5">Your team takes over the chatting and socials, and generates traffic on top of yours.</span></li>
+      </ol>
+    </section>
+
+    <section class="apply glass" id="apply">
+      <div class="apply-copy">
+        <p class="eyebrow" data-i="f0">Application</p>
+        <h2 data-i="f1">Apply to <em>Naylis.</em></h2>
+        <p class="muted" data-i="f2">Tell us where you're at. Established creator or beginner, we review every profile.</p>
+        <ul>
+          <li data-i="f3">Adults only (18 or older).</li>
+          <li data-i="f4">Your answers are only used to review your application.</li>
+        </ul>
+      </div>
+
+      <form id="candidature" novalidate>
+        <div class="field">
+          <label for="f-prenom" data-i="l1">First name or alias</label>
+          <input id="f-prenom" name="prenom" type="text" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="f-age" data-i="l2">Age</label>
+          <input id="f-age" name="age" type="number" inputmode="numeric" min="18" max="99" required>
+        </div>
+        <div class="field full">
+          <label for="f-contact"><span data-i="l3">Where to reach you</span> <span class="hint" data-i="l3h">Telegram, WhatsApp or email</span></label>
+          <input id="f-contact" name="contact" type="text" placeholder="@yourhandle, number or email address" data-ip="l3p" required>
+        </div>
+        <div class="field full">
+          <label for="f-reseaux"><span data-i="l4">Your socials</span> <span class="hint">Instagram, TikTok, X…</span></label>
+          <input id="f-reseaux" name="reseaux" type="text" placeholder="@youraccount" data-ip="l4p">
+        </div>
+        <div class="field full" role="radiogroup" aria-labelledby="l-situation">
+          <span class="legend" id="l-situation" data-i="l5">Your situation</span>
+          <div class="seg">
+            <label><input type="radio" name="situation" id="f-sit-lancee" value="lancee" checked><span data-i="l5a">Already established</span></label>
+            <label><input type="radio" name="situation" id="f-sit-nouvelle" value="nouvelle"><span data-i="l5b">I'm starting out</span></label>
+          </div>
+        </div>
+        <div class="field" id="bloc-plateforme">
+          <label for="f-plateforme" data-i="l6">Platform</label>
+          <select id="f-plateforme" name="plateforme">
+            <option>OnlyFans</option>
+            <option>MYM</option>
+            <option data-i="l6a">Both</option>
+            <option data-i="l6b">Other</option>
+          </select>
+        </div>
+        <div class="field" id="bloc-revenu">
+          <label for="f-revenu" data-i="l7">Current monthly revenue</label>
+          <select id="f-revenu" name="revenu">
+            <option data-i="l7a">Under $5k</option>
+            <option data-i="l7b">$5k to $20k</option>
+            <option data-i="l7c">$20k to $50k</option>
+            <option data-i="l7d">$50k to $100k</option>
+            <option data-i="l7e">Over $100k</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="f-message"><span data-i="l8">A word about you</span> <span class="hint" data-i="l8h">optional</span></label>
+          <textarea id="f-message" name="message" placeholder="Your niche, your goals, what you expect from an agency." data-ip="l8p"></textarea>
+        </div>
+        <label class="check field full" for="f-majeure">
+          <input id="f-majeure" name="majeure" type="checkbox" required>
+          <span data-i="l9">I certify that I am 18 or older.</span>
+        </label>
+        <p class="error field full" id="erreur" role="alert" hidden></p>
+        <div class="form-foot">
+          <button class="btn btn-primary" type="submit" data-i="l10">Prepare my application</button>
+        </div>
+
+        <div class="result" id="resultat" aria-live="polite" hidden>
+          <div>
+            <h3 data-i="r1">Your application is ready.</h3>
+            <p class="muted" id="resultat-texte"></p>
+          </div>
+          <pre id="recap" tabindex="0"></pre>
+          <div class="result-actions">
+            <a class="btn btn-primary" id="lien-telegram" target="_blank" rel="noopener" data-i="r2" hidden>Send on Telegram</a>
+            <a class="btn btn-primary" id="lien-whatsapp" target="_blank" rel="noopener" data-i="r3" hidden>Send on WhatsApp</a>
+            <button class="btn btn-ghost" type="button" id="copier">Copy the message</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="section" id="questions">
+      <div class="head">
+        <p class="eyebrow">Questions</p>
+        <h2 data-i="q0">What we get asked most.</h2>
+      </div>
+      <div class="faq">
+        <details class="glass">
+          <summary data-i="q1t">I don't have an account yet. Can I apply?</summary>
+          <p data-i="q1">Yes. We also take on new creators. Since the agency's upfront investment is bigger, your share may be lower at the start, then it gets renegotiated.</p>
+        </details>
+        <details class="glass">
+          <summary data-i="q2t">What share does the agency keep?</summary>
+          <p data-i="q2">50% for an established creator. For a new creator, the percentage is agreed with you before we start, and it can be renegotiated.</p>
+        </details>
+        <details class="glass">
+          <summary data-i="q3t">Who handles my socials and my traffic?</summary>
+          <p data-i="q3">The agency manages your social accounts. For traffic, you take part and the agency generates its own too: it doesn't rest on you alone.</p>
+        </details>
+        <details class="glass">
+          <summary data-i="q4t">Does the chatting really run at night?</summary>
+          <p data-i="q4">Yes, 24/7, with optimized sales scripts.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <a class="brand" href="#home" aria-label="Naylis Agency">
+        <svg aria-hidden="true"><use href="#nay-mark"/></svg>
+        <span class="brand-name"><b>Naylis</b><small>Agency</small></span>
+      </a>
+      <span><span data-i="z1">Adults only</span> · © 2026 Naylis Agency</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // OÙ PARTENT LES CANDIDATURES : renseigner au moins un des deux.
+  // telegram : le pseudo sans @ (ex. "naylisagency") ; whatsapp : le numéro au format international sans + (ex. "33612345678").
+  var CONTACT = { telegram: "", whatsapp: "33771542113" };
+  // Envoi par e-mail : seulement sur la version hébergée (index.html), qui pose l'adresse du service de formulaire.
+  var MAIL = window.NAYLIS_MAIL || "";
+  var dernierEnvoi = "";
+
+  // L'anglais est dans la page ; le français remplace les textes à la demande (bouton FR).
+  var FR = {
+    nav1: "L'agence", nav2: "Méthode", nav3: "Conditions", nav4: "Questions", nav5: "Postuler",
+    h0: "Agence de management OnlyFans",
+    h1: "Tu crées ton contenu. <em>On s'occupe du reste.</em>",
+    h2: "Chatting 24h/24, réseaux sociaux gérés, trafic généré en plus du tien. Une équipe dédiée fait tourner ton compte pendant que tu te concentres sur ton contenu. Partage 50/50.",
+    h3: "Postuler maintenant", h4: "Voir comment on travaille",
+    c1: "Chatting 24h/24", c2: "Partage 50 / 50", c3: "Équipe dédiée",
+    s1b: "24h/24", s1: "Chatting, 7 jours sur 7",
+    s2b: "40 %", s2: "Taux d'ouverture maximum visé sur les contenus payants",
+    s3b: "50–250 k€", s3: "par mois : les comptes pour lesquels notre structure est pensée",
+    s4: "Partage pour les créatrices déjà lancées",
+    a0: "L'agence", a1: "Une agence qui travaille <em>autant que toi.</em>",
+    a2: "Trop souvent, la créatrice produit le contenu, anime ses réseaux et ramène son trafic pendant que l'agence prend sa part. Chez Naylis, on gère tes réseaux et on génère du trafic de notre côté, en plus du tien.",
+    k1t: "Chatting 24h/24", k1: "Des chatteurs formés répondent à tes fans jour et nuit, avec des scripts de vente écrits et optimisés pour vendre.",
+    k2t: "Une équipe dédiée à ton compte", k2: "Chaque créatrice a sa propre équipe. Les personnes qui gèrent ton compte le connaissent, et tu sais à qui parler.",
+    k3t: "Tes réseaux sociaux, gérés", k3: "Notre équipe prend en main tes comptes sociaux : organisation, publication et suivi.",
+    k4t: "Un trafic qui ne repose pas que sur toi", k4: "Tu participes au trafic, et l'agence en génère aussi de son côté. Ta croissance ne dépend pas seulement de ce que tu postes.",
+    v0a: "Ce qu'on voit souvent", v0b: "Chez Naylis",
+    v1: "Trafic", v1a: "Tu le ramènes seule", v1b: "L'agence en génère aussi, en plus du tien",
+    v2: "Réseaux sociaux", v2a: "Tu postes tout, tous les jours", v2b: "Gérés par notre équipe",
+    v3a: "Horaires limités, messages improvisés", v3b: "24h/24, scripts de vente optimisés",
+    v4a: "Un manager pour des dizaines de comptes", v4b: "Une équipe dédiée par créatrice",
+    m0: "Méthode", m1: "On vise 40 % d'ouverture. <em>Pas plus.</em>",
+    m2: "Quand plus de 40 % des fans ouvrent un contenu payant, son prix est trop bas. Nos scripts et nos prix sont réglés pour rester sous ce plafond, et vendre chaque contenu à sa vraie valeur.",
+    m3: "Zone visée", m4: "Au-dessus : prix trop bas", m5a: "0 %", m5b: "40 %", m5c: "100 %",
+    m6: "Taux d'ouverture d'un contenu payant envoyé en message.",
+    t0: "Conditions", t1: "Des conditions claires <em>dès le départ.</em>",
+    t2: "Créatrice déjà lancée",
+    t3: "Tu as déjà un compte actif et des revenus. On partage à parts égales : la moitié pour toi, la moitié pour l'agence qui gère le chatting et les réseaux, et génère du trafic en plus du tien.",
+    t4: "Nouvelle créatrice", t5: "Sur mesure",
+    t6: "On accepte aussi les débutantes. L'investissement de départ est plus lourd pour l'agence, donc ta part peut être plus basse au début. Elle se renégocie quand ton compte décolle.",
+    p0: "Déroulement", p1: "De ta candidature au lancement.",
+    p2t: "Tu postules", p2: "Le formulaire prend deux minutes.",
+    p3t: "On échange", p3: "On regarde ensemble ta situation et tes objectifs.",
+    p4t: "On te fait une proposition", p4: "Pourcentage, équipe, plan de lancement : tout est posé avant de commencer.",
+    p5t: "On lance", p5: "Ton équipe prend en main le chatting et les réseaux, et génère du trafic en plus du tien.",
+    f0: "Candidature", f1: "Postuler chez <em>Naylis.</em>",
+    f2: "Dis-nous où tu en es. Créatrice déjà lancée ou débutante, on étudie chaque profil.",
+    f3: "Réservé aux personnes majeures (18 ans ou plus).", f4: "Tes réponses servent uniquement à étudier ta candidature.",
+    l1: "Prénom ou pseudo", l2: "Âge", l3: "Où te recontacter", l3h: "Telegram, WhatsApp ou e-mail",
+    l3p: "@tonpseudo, numéro ou adresse e-mail", l4: "Tes réseaux", l4p: "@toncompte",
+    l5: "Ta situation", l5a: "Déjà lancée", l5b: "Je débute",
+    l6: "Plateforme", l6a: "Les deux", l6b: "Autre",
+    l7: "Revenu mensuel actuel", l7a: "Moins de 5 k€", l7b: "5 à 20 k€", l7c: "20 à 50 k€", l7d: "50 à 100 k€", l7e: "Plus de 100 k€",
+    l8: "Un mot sur toi", l8h: "facultatif", l8p: "Ton univers, tes objectifs, ce que tu attends d'une agence.",
+    l9: "Je certifie avoir 18 ans ou plus.", l10: "Préparer ma candidature",
+    r1: "Ta candidature est prête.", r2: "Envoyer sur Telegram", r3: "Envoyer sur WhatsApp",
+    q0: "Ce qu'on nous demande souvent.",
+    q1t: "Je n'ai pas encore de compte, je peux postuler ?", q1: "Oui. On prend aussi les nouvelles créatrices. Comme l'investissement de départ est plus important pour l'agence, ta part peut être plus basse au début, puis elle se renégocie.",
+    q2t: "Quelle part garde l'agence ?", q2: "50 % pour une créatrice déjà lancée. Pour une nouvelle créatrice, le pourcentage est fixé avec toi avant de commencer et il est renégociable.",
+    q3t: "Qui s'occupe de mes réseaux et de mon trafic ?", q3: "L'agence gère tes réseaux sociaux. Pour le trafic, tu y participes et l'agence en génère aussi de son côté : il ne repose pas sur toi seule.",
+    q4t: "Le chatting tourne vraiment la nuit ?", q4: "Oui, 24h/24 et 7 jours sur 7, avec des scripts de vente optimisés.",
+    z1: "Site réservé aux personnes majeures"
+  };
+  // Les phrases que le script écrit lui-même (erreurs, récapitulatif).
+  var MOTS = {
+    en: {
+      prenom: "Enter your first name or alias.", age: "Enter your age.",
+      mineure: "Naylis only works with adults (18 or older).",
+      contact: "Tell us where to reach you: Telegram, WhatsApp or email.",
+      case_: "Tick the box to certify that you are 18 or older.",
+      titre: "Naylis Agency application", sep: ": ", lPrenom: "Name", lAge: "Age", ans: "", lContact: "Contact", lReseaux: "Socials",
+      lSituation: "Situation", lancee: "Already established", nouvelle: "New creator", lPlateforme: "Platform", lRevenu: "Monthly revenue",
+      envoyer: "Last step: send this message to the agency with the button below.",
+      copierEnvoyer: "Copy this message and send it to the agency.",
+      envoyee: "Your application has been emailed to the agency. Send it on WhatsApp too for a faster reply.",
+      copier: "Copy the message", copie: "Message copied", selection: "Message selected: copy it"
+    },
+    fr: {
+      prenom: "Indique ton prénom ou ton pseudo.", age: "Indique ton âge.",
+      mineure: "Naylis travaille uniquement avec des personnes majeures (18 ans ou plus).",
+      contact: "Indique où te recontacter : Telegram, WhatsApp ou e-mail.",
+      case_: "Coche la case pour certifier que tu as 18 ans ou plus.",
+      titre: "Candidature Naylis Agency", sep: " : ", lPrenom: "Prénom", lAge: "Âge", ans: " ans", lContact: "Contact", lReseaux: "Réseaux",
+      lSituation: "Situation", lancee: "Déjà lancée", nouvelle: "Nouvelle créatrice", lPlateforme: "Plateforme", lRevenu: "Revenu mensuel",
+      envoyer: "Dernière étape : envoie ce message à l'agence avec le bouton ci-dessous.",
+      copierEnvoyer: "Copie ce message et envoie-le à l'agence.",
+      envoyee: "Ta candidature a été envoyée à l'agence par e-mail. Envoie-la aussi sur WhatsApp pour une réponse plus rapide.",
+      copier: "Copier le message", copie: "Message copié", selection: "Message sélectionné : copie-le"
+    }
+  };
+
+  var langue = "en";
+  var form = document.getElementById("candidature");
+  var erreur = document.getElementById("erreur");
+  var resultat = document.getElementById("resultat");
+  var recap = document.getElementById("recap");
+  var texte = document.getElementById("resultat-texte");
+  var lienTg = document.getElementById("lien-telegram");
+  var lienWa = document.getElementById("lien-whatsapp");
+  var copier = document.getElementById("copier");
+  var blocRevenu = document.getElementById("bloc-revenu");
+  var blocPlateforme = document.getElementById("bloc-plateforme");
+
+  function choisirLangue(l) {
+    langue = l === "fr" ? "fr" : "en";
+    document.documentElement.lang = langue;
+    document.querySelectorAll("[data-i]").forEach(function (el) {
+      if (el.dataset.en === undefined) el.dataset.en = el.innerHTML;
+      var fr = FR[el.dataset.i];
+      el.innerHTML = langue === "fr" && fr !== undefined ? fr : el.dataset.en;
+    });
+    document.querySelectorAll("[data-ip]").forEach(function (el) {
+      if (el.dataset.enp === undefined) el.dataset.enp = el.getAttribute("placeholder") || "";
+      var fr = FR[el.dataset.ip];
+      el.setAttribute("placeholder", langue === "fr" && fr !== undefined ? fr : el.dataset.enp);
+    });
+    document.querySelectorAll("[data-lang]").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.dataset.lang === langue ? "true" : "false");
+    });
+    copier.textContent = MOTS[langue].copier;
+    erreur.hidden = true;
+    resultat.hidden = true;
+    try { localStorage.setItem("naylis-langue", langue); } catch (e) { /* stockage indisponible : la langue ne sera pas retenue */ }
+  }
+  document.querySelectorAll("[data-lang]").forEach(function (b) {
+    b.addEventListener("click", function () { choisirLangue(b.dataset.lang); });
+  });
+  try { if (localStorage.getItem("naylis-langue") === "fr") choisirLangue("fr"); } catch (e) { /* on reste en anglais */ }
+
+  function situation() {
+    var r = form.querySelector('input[name="situation"]:checked');
+    return r ? r.value : "";
+  }
+  function majSituation() {
+    var lancee = situation() === "lancee";
+    blocRevenu.hidden = !lancee;
+    blocPlateforme.hidden = !lancee;
+  }
+  form.querySelectorAll('input[name="situation"]').forEach(function (r) { r.addEventListener("change", majSituation); });
+  majSituation();
+
+  function dire(message) {
+    erreur.textContent = message;
+    erreur.hidden = !message;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    resultat.hidden = true;
+    var m = MOTS[langue];
+    var v = function (id) { return (document.getElementById(id).value || "").trim(); };
+    var prenom = v("f-prenom"), contact = v("f-contact"), age = parseInt(v("f-age"), 10);
+    if (!prenom) { dire(m.prenom); return; }
+    if (!age) { dire(m.age); return; }
+    if (age < 18) { dire(m.mineure); return; }
+    if (!contact) { dire(m.contact); return; }
+    if (!document.getElementById("f-majeure").checked) { dire(m.case_); return; }
+    dire("");
+
+    var lancee = situation() === "lancee";
+    var lignes = [m.titre, "", m.lPrenom + m.sep + prenom, m.lAge + m.sep + age + m.ans, m.lContact + m.sep + contact];
+    if (v("f-reseaux")) lignes.push(m.lReseaux + m.sep + v("f-reseaux"));
+    lignes.push(m.lSituation + m.sep + (lancee ? m.lancee : m.nouvelle));
+    if (lancee) {
+      lignes.push(m.lPlateforme + m.sep + v("f-plateforme"));
+      lignes.push(m.lRevenu + m.sep + v("f-revenu"));
+    }
+    if (v("f-message")) lignes.push("", v("f-message"));
+    var message = lignes.join("\n");
+    recap.textContent = message;
+
+    var encode = encodeURIComponent(message);
+    lienTg.hidden = !CONTACT.telegram;
+    lienWa.hidden = !CONTACT.whatsapp;
+    if (CONTACT.telegram) lienTg.href = "https://t.me/" + CONTACT.telegram + "?text=" + encode;
+    if (CONTACT.whatsapp) lienWa.href = "https://wa.me/" + CONTACT.whatsapp + "?text=" + encode;
+    texte.textContent = (CONTACT.telegram || CONTACT.whatsapp) ? m.envoyer : m.copierEnvoyer;
+    copier.textContent = m.copier;
+    // Un même message ne part qu'une fois ; on n'annonce l'envoi que si le service l'a confirmé.
+    if (MAIL && message !== dernierEnvoi) {
+      dernierEnvoi = message;
+      fetch(MAIL, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ _subject: m.titre + " - " + prenom, _captcha: "false", _template: "box", message: message }) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { if (d && String(d.success) === "true") texte.textContent = m.envoyee; else dernierEnvoi = ""; })
+        .catch(function () { dernierEnvoi = ""; });
+    }
+    resultat.hidden = false;
+    resultat.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  });
+
+  copier.addEventListener("click", function () {
+    var m = MOTS[langue];
+    var fini = function () { copier.textContent = m.copie; };
+    var secours = function () {
+      var s = window.getSelection(), plage = document.createRange();
+      plage.selectNodeContents(recap); s.removeAllRanges(); s.addRange(plage);
+      copier.textContent = m.selection;
+    };
+    try { navigator.clipboard.writeText(recap.textContent).then(fini, secours); } catch (err) { secours(); }
+  });
+})();
+</script>
+</body>
+</html>
