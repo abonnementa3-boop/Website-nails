@@ -7,7 +7,10 @@ tete = tete.replace('<meta name="claude:viewport-fit-sides" content="cover">\n',
 doc = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
        '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
        '<meta name="description" content="Naylis Agency: 24/7 chatting, managed socials and traffic generated on top of yours, by a dedicated team. 50/50 split. Apply in two minutes.">\n'
-       '<link rel="icon" type="image/svg+xml" href="logo.svg">\n'
+       '<link rel="icon" href="/favicon.ico" sizes="any">\n'
+       '<link rel="icon" type="image/svg+xml" href="/logo.svg">\n'
+       '<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">\n'
+       '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
        '<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>\n'
        '<script>window.NAYLIS_MAIL="https://formsubmit.co/ajax/kylian.business@icloud.com";</script>\n'
        + tete.strip() + "\n</head>\n<body>\n" + corps.strip() + "\n</body>\n</html>\n")

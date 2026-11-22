@@ -3,4 +3,4 @@
 FROM public.ecr.aws/nginx/nginx:stable-alpine
 ENV PORT=8080
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
-COPY index.html logo.svg /usr/share/nginx/html/
+COPY index.html logo.svg favicon.ico favicon-32x32.png apple-touch-icon.png icon-512.png /usr/share/nginx/html/
