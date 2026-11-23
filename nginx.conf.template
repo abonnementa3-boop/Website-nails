@@ -2,7 +2,23 @@ server {
     listen ${PORT};
     root /usr/share/nginx/html;
     index index.html;
+    charset utf-8;
+    # « /blog » → « /blog/ » sans recoller le port interne dans l'adresse.
+    absolute_redirect off;
+
+    gzip on;
+    gzip_types text/css text/plain application/xml image/svg+xml application/json;
+
+    # Une adresse inconnue rend une vraie 404 : avant, tout retombait sur la page d'accueil
+    # (robots.txt et sitemap.xml compris), ce que les moteurs de recherche lisent comme du contenu dupliqué.
     location / {
-        try_files $uri $uri/ /index.html;
+        try_files $uri $uri/ =404;
+    }
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+    location ~* \.(?:css|svg|png|ico)$ {
+        expires 7d;
     }
 }

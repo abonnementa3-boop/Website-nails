@@ -230,6 +230,10 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .faq details p { padding: 0 1.4rem 1.25rem; color: var(--ink-soft); }
 
 /* Pied */
+.foot-liens { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; font-size: .9rem; padding-bottom: 1.4rem; }
+.foot-liens a { color: var(--ink-soft); text-decoration: none; font-weight: 600; }
+.foot-liens a:hover { color: var(--ink); }
+.foot-liens b { flex-basis: 100%; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); }
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1.6rem; border-top: 1px solid var(--line); font-size: .86rem; color: var(--ink-faint); }
 
 @media (max-width: 900px) {
@@ -305,6 +309,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         <a href="#method" data-i="nav2">Method</a>
         <a href="#terms" data-i="nav3">Terms</a>
         <a href="#questions" data-i="nav4">Questions</a>
+        <a href="/blog/" data-blog>Blog</a>
         <div class="lang" role="group" aria-label="Language">
           <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
           <button type="button" id="lang-fr" data-lang="fr" aria-pressed="false">FR</button>
@@ -555,6 +560,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
   </main>
 
   <footer class="wrap">
+    <!--LIENS-BLOG-->
     <div class="foot">
       <a class="brand" href="#home" aria-label="Naylis Agency">
         <svg aria-hidden="true"><use href="#nay-mark"/></svg>
@@ -675,12 +681,17 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
     });
     if (enCours) bouton.textContent = MOTS[langue].envoi;
     erreur.hidden = true;
-    try { localStorage.setItem("naylis-langue", langue); } catch (e) { /* stockage indisponible : la langue ne sera pas retenue */ }
   }
+  // CHAQUE LANGUE A SON ADRESSE (/ en anglais, /fr/ en français) : un moteur de recherche ne lit pas
+  // un texte qu'un bouton pose après coup. build.py écrit la page française en dur et pose NAYLIS_LANGUE.
+  var SUR_LE_SITE = /^https?:$/.test(location.protocol) && window.NAYLIS_LANGUE !== undefined;
   document.querySelectorAll("[data-lang]").forEach(function (b) {
-    b.addEventListener("click", function () { choisirLangue(b.dataset.lang); });
+    b.addEventListener("click", function () {
+      if (SUR_LE_SITE) location.href = b.dataset.lang === "fr" ? "/fr/" : "/";
+      else choisirLangue(b.dataset.lang);
+    });
   });
-  try { if (localStorage.getItem("naylis-langue") === "fr") choisirLangue("fr"); } catch (e) { /* on reste en anglais */ }
+  if (window.NAYLIS_LANGUE === "fr") choisirLangue("fr");
 
   function situation() {
     var r = form.querySelector('input[name="situation"]:checked');
