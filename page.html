@@ -266,7 +266,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .lang button { border: 0; background: none; cursor: pointer; padding: .38rem .7rem; border-radius: 999px; font: 700 .78rem/1 var(--font-body); letter-spacing: .06em; color: var(--ink-soft); }
 .lang button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
 @media (max-width: 900px) { .nav { gap: .6rem; } }
-@media (max-width: 420px) { .bar .btn { padding: .7rem .95rem; } .brand svg { width: 34px; height: 34px; } .brand-name b { font-size: 1.35rem; } }
+@media (max-width: 420px) { .lang button { padding: .34rem .42rem; } .bar { gap: .45rem; padding-left: .7rem; } .bar .btn { padding: .7rem .8rem; } .brand svg { width: 34px; height: 34px; } .brand-name b { font-size: 1.35rem; } }
 </style>
 <!--BODY-->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -313,6 +313,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         <div class="lang" role="group" aria-label="Language">
           <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
           <button type="button" id="lang-fr" data-lang="fr" aria-pressed="false">FR</button>
+          <button type="button" id="lang-es" data-lang="es" aria-pressed="false">ES</button>
         </div>
         <a class="btn btn-primary" href="#apply" data-i="nav5">Apply</a>
       </nav>
@@ -651,6 +652,15 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
       envoi: "Envoi…", bouton: "Envoyer ma candidature",
       echec: "Ta candidature n'a pas pu être envoyée. Vérifie ta connexion et réessaie dans un instant.",
       indisponible: "Les candidatures ne peuvent pas être envoyées depuis cet aperçu. Passe par le site de l'agence."
+    },
+    es: {
+      prenom: "Indica tu nombre o tu alias.", age: "Indica tu edad.",
+      mineure: "Naylis solo trabaja con personas mayores de edad (18 años o más).",
+      contact: "Indica tu número de WhatsApp con el prefijo del país, por ejemplo +54 9 11 1234 5678.",
+      case_: "Marca la casilla para certificar que tienes 18 años o más.",
+      envoi: "Enviando…", bouton: "Enviar mi candidatura",
+      echec: "No se pudo enviar tu candidatura. Revisa tu conexión e inténtalo de nuevo en un momento.",
+      indisponible: "Las candidaturas no se pueden enviar desde esta vista previa. Usa el sitio de la agencia."
     }
   };
 
@@ -687,11 +697,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
   var SUR_LE_SITE = /^https?:$/.test(location.protocol) && window.NAYLIS_LANGUE !== undefined;
   document.querySelectorAll("[data-lang]").forEach(function (b) {
     b.addEventListener("click", function () {
-      if (SUR_LE_SITE) location.href = b.dataset.lang === "fr" ? "/fr/" : "/";
+      if (SUR_LE_SITE) location.href = { fr: "/fr/", es: "/es/" }[b.dataset.lang] || "/";
       else choisirLangue(b.dataset.lang);
     });
   });
   if (window.NAYLIS_LANGUE === "fr") choisirLangue("fr");
+  // L'espagnol est écrit en dur par build.py (traductions/es.json) : seuls les messages du script changent.
+  if (window.NAYLIS_LANGUE === "es") { langue = "es"; document.documentElement.lang = "es"; }
 
   function situation() {
     var r = form.querySelector('input[name="situation"]:checked');

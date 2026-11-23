@@ -63,12 +63,34 @@ LANGUES = {
         "introuvable": "Cette page n'existe pas.", "retour": "Retour à l'accueil",
     },
 }
+LANGUES["es"] = {
+    "racine": "/es/", "blog": "/es/blog/", "locale": "es_ES",
+    "titre": "Agencia OnlyFans — Management, chatting 24/7, reparto 50/50 | Naylis Agency",
+    "description": ("Naylis es una agencia de OnlyFans: chatting 24/7, redes sociales gestionadas y tráfico generado "
+                    "además del tuyo, con un equipo dedicado. Reparto 50/50. Postula en dos minutos."),
+    "blog_titre": "Blog agencia OnlyFans — management, chatting, porcentajes | Naylis Agency",
+    "blog_description": ("Respuestas claras para creadoras: qué hace una agencia de OnlyFans, cuánto cobra, "
+                         "cómo elegir una seria y cómo detectar las estafas."),
+    "blog_h1": "El blog de la <em>agencia OnlyFans.</em>",
+    "blog_intro": "Respuestas claras para creadoras: qué hace una agencia, cuánto cuesta y cómo elegirla bien.",
+    "lire": "Leer el artículo", "accueil": "Inicio", "postuler": "Postular", "agence": "La agencia",
+    "maj": "Actualizado el", "minutes": "min de lectura", "faq": "Preguntas frecuentes",
+    "suite": "Sigue leyendo", "guides": "Guías",
+    "cta_titre": "¿Buscas un equipo que trabaje tanto como tú?",
+    "cta_texte": ("Chatting 24/7, redes sociales gestionadas, tráfico generado además del tuyo. "
+                  "Reparto 50/50 para creadoras ya lanzadas. El formulario toma dos minutos."),
+    "cta_bouton": "Postular en Naylis", "majeurs": "Sitio reservado a mayores de edad",
+    "introuvable": "Esta página no existe.", "retour": "Volver al inicio",
+}
+MOIS_ES = ("enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre").split()
 MOIS_FR = ("janvier février mars avril mai juin juillet août septembre octobre novembre décembre").split()
 MOIS_EN = ("January February March April May June July August September October November December").split()
 
 
 def date_lisible(iso: str, langue: str) -> str:
     a, m, j = (int(x) for x in iso.split("-"))
+    if langue == "es":
+        return f"{j} de {MOIS_ES[m - 1]} de {a}"
     return f"{j} {MOIS_FR[m - 1]} {a}" if langue == "fr" else f"{MOIS_EN[m - 1]} {j}, {a}"
 
 
@@ -148,12 +170,11 @@ def marque(langue: str) -> str:
             '<span class="brand-name"><b>Naylis</b><small>Agency</small></span></a>')
 
 
-def entete_blog(langue: str, autre: str | None) -> str:
+def entete_blog(langue: str, autres: dict | None) -> str:
+    """`autres` : langue → adresse de la même page dans les autres langues."""
     L = LANGUES[langue]
-    bascule = ""
-    if autre:
-        bascule = (f'<a class="lang-lien" href="{autre}" hreflang="{"fr" if langue == "en" else "en"}">'
-                   f'{"FR" if langue == "en" else "EN"}</a>')
+    bascule = "".join(f'<a class="lang-lien" href="{a}" hreflang="{l}">{l.upper()}</a>'
+                      for l, a in sorted((autres or {}).items()) if l != langue)
     return (f'<header class="top wrap"><div class="bar glass">{marque(langue)}<nav class="nav" aria-label="Main">'
             f'<a href="{L["racine"]}#agency">{L["agence"]}</a><a href="{L["blog"]}">Blog</a>{bascule}'
             f'<a class="btn btn-primary" href="{L["racine"]}#apply">{L["postuler"]}</a></nav></div></header>')
@@ -191,14 +212,10 @@ def ecrire(adresse: str, contenu: str) -> None:
     cible.write_text(contenu, encoding="utf-8")
 
 
-def fabriquer_blog(langue: str, articles: list, paires: dict) -> None:
+def fabriquer_blog(langue: str, articles: list, groupes: dict) -> None:
     L = LANGUES[langue]
-    autre_langue = "fr" if langue == "en" else "en"
     for a in articles:
-        jumeau = paires.get((langue, a["adresse_courte"]))
-        autres = {langue: a["adresse"]}
-        if jumeau:
-            autres[autre_langue] = jumeau["adresse"]
+        autres = {b["langue"]: b["adresse"] for b in groupes.get(a["groupe"], [a])}
         tete = tete_commune(a["titre"], a["description"], a["adresse"], langue, autres, "article")
         fil = [("Naylis Agency", L["racine"]), ("Blog", L["blog"]), (a["court"], a["adresse"])]
         graphe = [ORGANISATION, {
@@ -229,7 +246,7 @@ def fabriquer_blog(langue: str, articles: list, paires: dict) -> None:
             f'<a class="btn btn-primary" href="{L["racine"]}#apply">{L["cta_bouton"]} →</a></aside></article>'
             f'<section class="suite"><h2>{L["suite"]}</h2><div class="grille">'
             + "".join(carte(b, L) for b in voisins) + "</div></section>")
-        ecrire(a["adresse"], page(langue, tete, corps, articles, jumeau["adresse"] if jumeau else None))
+        ecrire(a["adresse"], page(langue, tete, corps, articles, autres))
     # La page d'accueil du blog
     autres = {l: LANGUES[l]["blog"] for l in LANGUES}
     tete = tete_commune(L["blog_titre"], L["blog_description"], L["blog"], langue, autres)
@@ -243,10 +260,17 @@ def fabriquer_blog(langue: str, articles: list, paires: dict) -> None:
              + "".join(carte(a, L) for a in articles) + "</div>"
              f'<aside class="cta glass"><h2>{L["cta_titre"]}</h2><p>{L["cta_texte"]}</p>'
              f'<a class="btn btn-primary" href="{L["racine"]}#apply">{L["cta_bouton"]} →</a></aside>')
-    ecrire(L["blog"], page(langue, tete, corps, articles, LANGUES[autre_langue]["blog"]))
+    ecrire(L["blog"], page(langue, tete, corps, articles, autres))
 
 
 # ------------------------------------------------------------------ l'accueil
+def dictionnaire(source: str, langue: str) -> dict:
+    """Le français vit dans le script de page.html ; les autres langues dans traductions/<langue>.json."""
+    if langue == "fr":
+        return dictionnaire_fr(source)
+    return json.loads((ICI / "traductions" / f"{langue}.json").read_text(encoding="utf-8"))
+
+
 def dictionnaire_fr(source: str) -> dict:
     bloc = source[source.index("var FR = {") + 9: source.index("};", source.index("var FR = {")) + 1]
     return {cle: json.loads('"' + valeur + '"')
@@ -273,10 +297,10 @@ def fabriquer_accueil(langue: str, articles: list) -> None:
     tete, corps = source.split("<!--BODY-->", 1)
     tete = tete.replace('<meta name="claude:viewport-fit-sides" content="cover">\n', "")
     tete = re.sub(r"<title>.*?</title>\n?", "", tete)
-    if langue == "fr":
-        corps = en_francais(corps, dictionnaire_fr(source))
+    if langue != "en":
+        corps = en_francais(corps, dictionnaire(source, langue))
         corps = corps.replace('aria-pressed="true">EN', 'aria-pressed="false">EN').replace(
-            'aria-pressed="false">FR', 'aria-pressed="true">FR')
+            'aria-pressed="false">%s' % langue.upper(), 'aria-pressed="true">%s' % langue.upper())
     corps = corps.replace('href="/blog/" data-blog', 'href="%s"' % L["blog"])
     liens = "".join(f'<a href="{a["adresse"]}">{html.escape(a["court"])}</a>' for a in articles)
     corps = corps.replace("<!--LIENS-BLOG-->", f'<div class="foot-liens"><b>{L["guides"]}</b>'
@@ -300,7 +324,7 @@ def fabriquer_accueil(langue: str, articles: list) -> None:
              '<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>\n'
            + '<script>window.NAYLIS_MAIL="%s";window.NAYLIS_LANGUE="%s";</script>\n' % (MAIL, langue)
            + tete.strip() + "\n</head>\n<body>\n" + corps.strip() + "\n</body>\n</html>\n")
-    ecrire(L["racine"] if langue == "fr" else "/index.html", doc)
+    ecrire(L["racine"] if langue != "en" else "/index.html", doc)
 
 
 def main() -> None:
@@ -312,17 +336,17 @@ def main() -> None:
     shutil.copyfile(ICI / "assets" / "blog.css", SORTIE / "blog.css")
     articles = {l: sorted((lire_article(c, l) for c in (ICI / "articles" / l).glob("*.html")),
                           key=lambda a: int(a.get("ordre", 99))) for l in LANGUES}
-    # Deux articles se répondent d'une langue à l'autre par la clé « jumeau ».
-    par_adresse = {(l, a["adresse_courte"]): a for l in articles for a in articles[l]}
-    paires = {}
-    for (l, court), a in par_adresse.items():
-        autre = "fr" if l == "en" else "en"
-        if a.get("jumeau") and (autre, a["jumeau"]) in par_adresse:
-            paires[(l, court)] = par_adresse[(autre, a["jumeau"])]
+    # Les versions d'un même article se retrouvent par leur adresse ANGLAISE : un article français ou
+    # espagnol la donne dans « jumeau ». Sans jumeau, l'article n'existe que dans sa langue.
+    groupes = {}
+    for l in articles:
+        for a in articles[l]:
+            a["groupe"] = a["adresse_courte"] if l == "en" else (a.get("jumeau") or f"{l}:{a['adresse_courte']}")
+            groupes.setdefault(a["groupe"], []).append(a)
     pages = []
     for l in LANGUES:
         fabriquer_accueil(l, articles[l])
-        fabriquer_blog(l, articles[l], paires)
+        fabriquer_blog(l, articles[l], groupes)
         pages += [(LANGUES[l]["racine"], "1.0", None), (LANGUES[l]["blog"], "0.8", None)]
         pages += [(a["adresse"], "0.7", a.get("maj", a["date"])) for a in articles[l]]
     plan = ['<?xml version="1.0" encoding="UTF-8"?>',
@@ -338,7 +362,8 @@ def main() -> None:
     corps = (f'<section class="blog-tete"><p class="eyebrow">404</p><h1>{L["introuvable"]}</h1>'
              f'<p class="lead">{LANGUES["fr"]["introuvable"]}</p>'
              f'<p><a class="btn btn-primary" href="/">{L["retour"]}</a> '
-             f'<a class="btn btn-ghost" href="/fr/">{LANGUES["fr"]["retour"]}</a></p></section>')
+             f'<a class="btn btn-ghost" href="/fr/">{LANGUES["fr"]["retour"]}</a> '
+             f'<a class="btn btn-ghost" href="/es/">{LANGUES["es"]["retour"]}</a></p></section>')
     ecrire("/404.html", page("en", tete, corps, articles["en"]))
     print("site/ :", sum(1 for _ in SORTIE.rglob("*.html")), "pages,", len(pages), "adresses dans le plan du site")
 

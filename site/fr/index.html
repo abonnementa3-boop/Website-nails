@@ -7,6 +7,7 @@
 <meta name="description" content="Naylis est une agence OnlyFans : chatting 24h/24, réseaux sociaux gérés et trafic généré en plus du tien, par une équipe dédiée. Partage 50/50. Candidature en deux minutes.">
 <link rel="canonical" href="https://naylisagency.com/fr/">
 <link rel="alternate" hreflang="en" href="https://naylisagency.com/">
+<link rel="alternate" hreflang="es" href="https://naylisagency.com/es/">
 <link rel="alternate" hreflang="fr" href="https://naylisagency.com/fr/">
 <link rel="alternate" hreflang="x-default" href="https://naylisagency.com/">
 <meta property="og:type" content="website">
@@ -293,7 +294,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .lang button { border: 0; background: none; cursor: pointer; padding: .38rem .7rem; border-radius: 999px; font: 700 .78rem/1 var(--font-body); letter-spacing: .06em; color: var(--ink-soft); }
 .lang button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
 @media (max-width: 900px) { .nav { gap: .6rem; } }
-@media (max-width: 420px) { .bar .btn { padding: .7rem .95rem; } .brand svg { width: 34px; height: 34px; } .brand-name b { font-size: 1.35rem; } }
+@media (max-width: 420px) { .lang button { padding: .34rem .42rem; } .bar { gap: .45rem; padding-left: .7rem; } .bar .btn { padding: .7rem .8rem; } .brand svg { width: 34px; height: 34px; } .brand-name b { font-size: 1.35rem; } }
 </style>
 </head>
 <body>
@@ -341,6 +342,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
         <div class="lang" role="group" aria-label="Language">
           <button type="button" id="lang-en" data-lang="en" aria-pressed="false">EN</button>
           <button type="button" id="lang-fr" data-lang="fr" aria-pressed="true">FR</button>
+          <button type="button" id="lang-es" data-lang="es" aria-pressed="false">ES</button>
         </div>
         <a class="btn btn-primary" href="#apply" data-i="nav5">Postuler</a>
       </nav>
@@ -588,7 +590,7 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
   </main>
 
   <footer class="wrap">
-    <div class="foot-liens"><b>Guides</b><a href="/fr/blog/">Blog</a><a href="/fr/blog/agence-onlyfans/">Agence OnlyFans : le guide complet</a><a href="/fr/blog/trouver-une-agence-onlyfans/">Trouver une agence OnlyFans</a><a href="/fr/blog/onlyfans-management/">OnlyFans management : définition et services</a><a href="/fr/blog/pourcentage-agence-onlyfans/">Pourcentage d&#x27;une agence OnlyFans</a><a href="/fr/blog/arnaque-agence-onlyfans/">Arnaques d&#x27;agences OnlyFans : les signaux</a><a href="/fr/blog/chatting-onlyfans/">Chatting OnlyFans : le guide</a><a href="/fr/blog/agence-mym/">Agence MYM et OnlyFans</a><a href="/fr/blog/debuter-sur-onlyfans-avec-une-agence/">Débuter sur OnlyFans avec une agence</a></div>
+    <div class="foot-liens"><b>Guides</b><a href="/fr/blog/">Blog</a><a href="/fr/blog/agence-onlyfans/">Agence OnlyFans : le guide complet</a><a href="/fr/blog/trouver-une-agence-onlyfans/">Trouver une agence OnlyFans</a><a href="/fr/blog/onlyfans-management/">OnlyFans management : définition et services</a><a href="/fr/blog/pourcentage-agence-onlyfans/">Pourcentage d&#x27;une agence OnlyFans</a><a href="/fr/blog/arnaque-agence-onlyfans/">Arnaques d&#x27;agences OnlyFans : les signaux</a><a href="/fr/blog/chatting-onlyfans/">Chatting OnlyFans : le guide</a><a href="/fr/blog/agence-mym/">Agence MYM et OnlyFans</a><a href="/fr/blog/debuter-sur-onlyfans-avec-une-agence/">Débuter sur OnlyFans avec une agence</a><a href="/fr/blog/meilleure-agence-onlyfans/">Meilleure agence OnlyFans</a><a href="/fr/blog/agence-onlyfans-france/">Agence OnlyFans en France</a><a href="/fr/blog/avis-agence-onlyfans/">Avis sur les agences OnlyFans</a><a href="/fr/blog/devenir-modele-onlyfans/">Devenir modèle OnlyFans</a><a href="/fr/blog/combien-gagne-une-creatrice-onlyfans/">Combien gagne une créatrice OnlyFans</a><a href="/fr/blog/contrat-agence-onlyfans/">Contrat avec une agence OnlyFans</a></div>
     <div class="foot">
       <a class="brand" href="#home" aria-label="Naylis Agency">
         <svg aria-hidden="true"><use href="#nay-mark"/></svg>
@@ -679,6 +681,15 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
       envoi: "Envoi…", bouton: "Envoyer ma candidature",
       echec: "Ta candidature n'a pas pu être envoyée. Vérifie ta connexion et réessaie dans un instant.",
       indisponible: "Les candidatures ne peuvent pas être envoyées depuis cet aperçu. Passe par le site de l'agence."
+    },
+    es: {
+      prenom: "Indica tu nombre o tu alias.", age: "Indica tu edad.",
+      mineure: "Naylis solo trabaja con personas mayores de edad (18 años o más).",
+      contact: "Indica tu número de WhatsApp con el prefijo del país, por ejemplo +54 9 11 1234 5678.",
+      case_: "Marca la casilla para certificar que tienes 18 años o más.",
+      envoi: "Enviando…", bouton: "Enviar mi candidatura",
+      echec: "No se pudo enviar tu candidatura. Revisa tu conexión e inténtalo de nuevo en un momento.",
+      indisponible: "Las candidaturas no se pueden enviar desde esta vista previa. Usa el sitio de la agencia."
     }
   };
 
@@ -715,11 +726,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
   var SUR_LE_SITE = /^https?:$/.test(location.protocol) && window.NAYLIS_LANGUE !== undefined;
   document.querySelectorAll("[data-lang]").forEach(function (b) {
     b.addEventListener("click", function () {
-      if (SUR_LE_SITE) location.href = b.dataset.lang === "fr" ? "/fr/" : "/";
+      if (SUR_LE_SITE) location.href = { fr: "/fr/", es: "/es/" }[b.dataset.lang] || "/";
       else choisirLangue(b.dataset.lang);
     });
   });
   if (window.NAYLIS_LANGUE === "fr") choisirLangue("fr");
+  // L'espagnol est écrit en dur par build.py (traductions/es.json) : seuls les messages du script changent.
+  if (window.NAYLIS_LANGUE === "es") { langue = "es"; document.documentElement.lang = "es"; }
 
   function situation() {
     var r = form.querySelector('input[name="situation"]:checked');

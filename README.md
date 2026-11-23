@@ -1,10 +1,11 @@
 # Naylis Agency — site (naylisagency.com)
 
-Site statique : l'accueil (présentation + candidature) en anglais (`/`) et en français (`/fr/`), et un blog
-dans les deux langues (`/blog/`, `/fr/blog/`). Railway construit le `Dockerfile` à chaque poussée sur `main`.
+Site statique : l'accueil (présentation + candidature) en anglais (`/`), en français (`/fr/`) et en espagnol (`/es/`), et un blog
+dans les trois langues (`/blog/`, `/fr/blog/`, `/es/blog/`). Railway construit le `Dockerfile` à chaque poussée sur `main`.
 
-- `page.html` : la source de l'accueil (l'anglais dans la page, le français dans le dictionnaire `FR` du script).
-- `articles/fr/*.html`, `articles/en/*.html` : un fichier par article du blog.
+- `page.html` : la source de l'accueil (anglais dans la page, français dans le dictionnaire `FR` du script).
+- `traductions/es.json` : l'espagnol de l'accueil (mêmes clés que `FR`). Une clé ajoutée dans la page se traduit dans les deux.
+- `articles/fr/*.html`, `articles/en/*.html`, `articles/es/*.html` : un fichier par article du blog.
 - `assets/blog.css` : la feuille de style du blog.
 - `build.py` : fabrique tout le dossier `site/`. **Après toute modification, lancer `python3 build.py`
   et pousser `site/` avec le reste** (l'image ne contient pas Python : elle sert `site/` tel quel).
@@ -23,7 +24,7 @@ Créer `articles/fr/mon-adresse.html` (le nom du fichier devient l'adresse `/fr/
     rubrique: Guide
     date: 2026-11-23
     ordre: 9
-    jumeau: adresse-de-la-version-anglaise   (facultatif, et à mettre des DEUX côtés)
+    jumeau: adresse-de-la-version-anglaise   (facultatif ; côté français et espagnol seulement)
 
     <p>Le texte en HTML…</p>
 

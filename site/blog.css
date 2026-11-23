@@ -103,9 +103,15 @@ a { color: inherit; }
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1.6rem; border-top: 1px solid var(--line); font-size: .86rem; color: var(--ink-faint); }
 
 @media (max-width: 640px) {
-  .nav { gap: .7rem; }
+  /* Trois langues : deux liens de langue + Blog + Postuler doivent tenir sur 360 px. */
+  .nav { gap: .4rem; }
   .nav a:not(.btn):not(.lang-lien):first-child { display: none; }
+  .nav .lang-lien { padding: .32rem .5rem; }
+  .brand { gap: .45rem; }
+  .brand img { width: 32px; height: 32px; }
+  .brand-name b { font-size: 1.3rem; }
   .brand-name small { display: none; }
-  .bar .btn { padding: .7rem .95rem; }
+  .bar { padding-left: .7rem; gap: .5rem; }
+  .bar .btn { padding: .65rem .8rem; font-size: .88rem; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn, .carte { transition: none; } }
