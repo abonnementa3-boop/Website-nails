@@ -25,10 +25,10 @@ FICHIERS = ("logo.svg", "favicon.ico", "favicon-32x32.png", "apple-touch-icon.pn
 LANGUES = {
     "en": {
         "racine": "/", "blog": "/blog/", "locale": "en_US",
-        "titre": "OnlyFans Management Agency — 24/7 Chatting, 50/50 Split | Naylis Agency",
-        "description": ("Naylis is an OnlyFans management agency: 24/7 chatting, managed socials and traffic "
+        "titre": "OnlyFans Agency — OFM Management, 24/7 Chatting, 50/50 Split | Naylis Agency",
+        "description": ("Naylis is an OnlyFans agency (OFM): 24/7 chatting, managed socials and traffic "
                         "generated on top of yours, by a dedicated team. 50/50 split. Apply in two minutes."),
-        "blog_titre": "OnlyFans Agency Blog — Management, Chatting, Percentages | Naylis Agency",
+        "blog_titre": "OnlyFans Agency Blog — OFM, Management, Chatting, Percentages | Naylis Agency",
         "blog_description": ("Straight answers for creators: what an OnlyFans management agency does, what it "
                              "costs, how to choose one and how to spot a bad one."),
         "blog_h1": "The OnlyFans agency <em>blog.</em>",
