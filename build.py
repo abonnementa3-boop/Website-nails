@@ -317,6 +317,8 @@ def fabriquer_accueil(langue: str, articles: list) -> None:
                   for q, r in questions]}]
     doc = ('<!doctype html>\n<html lang="%s">\n<head>\n<meta charset="utf-8">\n'
            '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n' % langue
+           # Vérification du domaine par Meta : la balise doit être dans <head>, en dur (jamais posée par un script).
+           + '<meta name="facebook-domain-verification" content="ryamh7xu8zdbda7rsdobfd24i53gj4" />\n'
            + tete_commune(L["titre"], L["description"], L["racine"], langue, {l: LANGUES[l]["racine"] for l in LANGUES})
            + ld({"@context": "https://schema.org", "@graph": graphe})
            + '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
